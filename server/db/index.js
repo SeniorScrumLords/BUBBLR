@@ -128,7 +128,7 @@ UserFriends.sync()
 
     estDrinks.sync()
       .catch((err) => console.error('Failed syncing estDrinks: ', err));
-
+ 
 module.exports = {
   User,
   Event,
