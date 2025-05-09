@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-plusplus */
 import React from 'react';
 import axios from 'axios';
@@ -11,6 +12,7 @@ import OgDrink from './profileChildren/OgDrink.jsx';
 import Concoction from './profileChildren/Concoction.jsx';
 import UserSearch from './profileChildren/UserSearch.jsx';
 import FriendItem from './profileChildren/FriendItem.jsx';
+import AvatarUploader from './AvatarUploader.jsx';
 import '../styling/Profile.css';
 
 class Profile extends React.Component {
@@ -27,15 +29,38 @@ class Profile extends React.Component {
       reviews: [],
     };
 
+    // this.getUser = () => {
+    //   const { id } = this.state;
+    //   axios
+    //     .get(`/profile/${id}`)
+    //     .then((userResponse) => {
+    //       const { displayName, createdAt } = userResponse.data;
+
+    //       // need to update drinks/reviews this way as well
+    //       this.setState({ displayName, createdAt, id });
+    //       return axios.get(`/profile/friends/${id}`);
+    //     })
+    //     .then(({ data }) => {
+    //       this.setState({ friends: data });
+    //       return axios.get('/profile/concoctions');
+    //     })
+    //     .then(({ data }) => {
+    //       this.setState({ concoctions: data });
+    //     })
+    //     .then(() => axios.get('/profile/estDrinks'))
+    //     .then(({ data }) => this.setState({ ogDrinks: data }))
+    //     .catch((err) => console.error('Failed getting user data', err));
+    // };
+
     this.getUser = () => {
       const { id } = this.state;
       axios
         .get(`/profile/${id}`)
         .then((userResponse) => {
-          const { displayName, createdAt } = userResponse.data;
-
-          // need to update drinks/reviews this way as well
-          this.setState({ displayName, createdAt, id });
+          const { displayName, createdAt, avatar } = userResponse.data;
+          this.setState({
+            displayName, createdAt, avatar, id,
+          });
           return axios.get(`/profile/friends/${id}`);
         })
         .then(({ data }) => {
@@ -146,6 +171,21 @@ class Profile extends React.Component {
             </Card>
           </Card.Body>
         </Card>
+
+        <Card className='custom-card mt-4 mb-4'>
+  <Card.Body className='custom-card-body' style={{ color: '#ffffff' }}>
+    <Card.Title>Avatar</Card.Title>
+    <AvatarUploader
+      user={{
+        googleId: this.state.id,
+        avatar: this.state.avatar || 'avatar.png',
+      }}
+      refreshUser={this.getUser}
+    />
+    <Card.Text>{this.state.displayName}</Card.Text>
+  </Card.Body>
+</Card>
+
         <Card className='custom-card mb-4'>
           <Card.Body className='custom-card-body' style={{ color: '#ffffff' }}>
             <Card.Title>Your Concoctions</Card.Title>
@@ -186,8 +226,8 @@ class Profile extends React.Component {
           <Card.Body className='custom-card-body' style={{ color: '#ffffff' }}>
             <Card.Title>Your Reviews</Card.Title>
             <ListGroup>
-              {reviews.map(() => (
-                <li>hello</li>
+              {reviews.map((review, index) => (
+                <li key={index}>hello</li>
               ))}
             </ListGroup>
           </Card.Body>

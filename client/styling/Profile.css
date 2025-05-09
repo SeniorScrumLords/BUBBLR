@@ -1,3 +1,42 @@
 .custom-card-body {
   background: linear-gradient(135deg, #6b0042, #ffba0f);
 }
+
+.avatar-uploader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+}
+
+.avatar-title-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.avatar-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.avatar-grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.avatar-option {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.avatar-option.selected {
+  border: 3px solid blue;
+  transform: scale(1.1);
+}
+
+.avatar-reset-btn {
+  align-self: flex-start;
+}
