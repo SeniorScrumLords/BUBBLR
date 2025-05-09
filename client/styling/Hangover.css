@@ -1,0 +1,10 @@
+.list-group-dark {
+  background-color: #343a40; /* Dark background */
+  color: #ffffff; /* Light text */
+}
+
+.list-group-dark .list-group-item {
+  background-color: #343a40; /* Dark background for items */
+  color: #ffffff; /* Light text for items */
+  border: 1px solid #495057; /* Border color */
+}

@@ -8,7 +8,12 @@
     "build": "webpack -w",
     "start": "webpack -w & nodemon server/index.js",
     "prod": "webpack && node server/index.js",
-    "seed": "node server/db/index.js"
+    "seed": "node server/db/index.js",
+    "greed": "node server/db/seedMatchData.js",
+    "ach": "node server/db/achievementsSeed.js",
+    "liquor": "node server/db/seedLiquor.js",
+    "hang": "node server/db/hangoverSeed.js",
+    "seedAll": "node server/db/index.js && node server/db/seedLiquor.js && node server/db/hangoverSeed.js"
   },
   "keywords": [],
   "author": "",
@@ -30,15 +35,18 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@canvasjs/react-charts": "^1.0.2",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "css-loader": "^6.10.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "ejs": "^3.1.9",
     "express": "^4.18.3",
     "express-session": "^1.18.0",
     "lodash": "^4.17.21",
+    "multer": "^1.4.5-lts.1",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "prettier": "^3.2.5",

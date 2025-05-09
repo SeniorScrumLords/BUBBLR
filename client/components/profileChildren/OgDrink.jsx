@@ -9,33 +9,26 @@ import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 
-function OgDrink({ drink, removeDrink }) {
-  console.log('drink ingredients array', drink.drinkIngredients); // <-- Logs an array of objects,
-  // this component needs to be updated to render these properly now that the database actually utilizes estDrinks.
+function OgDrink({ drink }) {
+  // eslint-disable-next-line no-nested-ternary
+  const ingredients = typeof drink.drinkIngredients === 'string'
+    ? JSON.parse(drink.drinkIngredients || '[]')
+    : Array.isArray(drink.drinkIngredients)
+      ? drink.drinkIngredients
+      : [];
+
   const {
-    drinkId, drinkImage, drinkName, drinkCategory, drinkIngredients,
+    drinkId, drinkImage, drinkName, drinkCategory,
   } = drink;
+
   return (
     <Col>
       <Card>
         <Card.Body>
           <Link to={`/estDrink/${drinkId}`}>
-            <Button
-              size='sm'
-            >
-              Go To
-            </Button>
+            <Button size="sm">Go To</Button>
           </Link>
-          <Button
-            size='sm'
-            value={drinkId}
-            variant='danger'
-            onClick={removeDrink}
-            className='ogDrink'
-          >
-            Remove
-          </Button>
-          <Card.Img variant='top' src={drinkImage} />
+          <Card.Img variant="top" src={drinkImage} />
           <Accordion>
             <Accordion.Header>
               <Card.Title>{drinkName}</Card.Title>
@@ -45,10 +38,15 @@ function OgDrink({ drink, removeDrink }) {
                 <Card.Body>
                   <Card.Title>{drinkCategory}</Card.Title>
                   <Card.Text>Ingredients: </Card.Text>
-                  {/* UPDATE HERE */}
-                  {drinkIngredients.map((item) => (
-                    <Card.Text key={`${drinkId}-${item.ingredient}`}>{`${item.ingredient}: ${item.measurement}`}</Card.Text>
-                  ))}
+                  {ingredients.length > 0 ? (
+                    ingredients.map((item, index) => (
+                      <Card.Text key={`${drinkId}-${index}`}>
+                        {`${item.ingredient}: ${item.measurement}`}
+                      </Card.Text>
+                    ))
+                  ) : (
+                    <Card.Text>No ingredients available</Card.Text>
+                  )}
                 </Card.Body>
               </Card>
             </Accordion.Body>
@@ -65,12 +63,8 @@ OgDrink.propTypes = {
     drinkImage: PropTypes.string.isRequired,
     drinkName: PropTypes.string.isRequired,
     drinkCategory: PropTypes.string.isRequired,
-    drinkIngredients: PropTypes.arrayOf(PropTypes.shape({
-      ingredient: PropTypes.string.isRequired,
-      measurement: PropTypes.string.isRequired,
-    }).isRequired).isRequired,
+    drinkIngredients: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   }).isRequired,
-  removeDrink: PropTypes.func.isRequired,
 };
 
 export default OgDrink;

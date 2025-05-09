@@ -94,10 +94,21 @@ function NavFilter({ onLogout }) {
             <Nav.Link as={Link} to='/creationStation'>
               Creation Station
             </Nav.Link>
+            <Nav.Link as={Link} to='/liquor'>
+              Liquor Cabinet
+            </Nav.Link>
+            <NavDropdown title='Games' id='gamesDropdown'>
+              <NavDropdown.Item as={Link} to="/trivia">Trivia</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/leaderboard">Leaderboard</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/memory-match">Memory Match</NavDropdown.Item>
+            </NavDropdown>
+            <Nav.Link as={Link} to='/hangovers'>
+            Hangovers
+            </Nav.Link>
             {onProfile && (
-              <Nav.Link onClick={onLogout}>
+              <><Nav.Link onClick={onLogout}>
                 Logout
-              </Nav.Link>
+                </Nav.Link></>
             )}
           </Nav>
         </Navbar.Collapse>
